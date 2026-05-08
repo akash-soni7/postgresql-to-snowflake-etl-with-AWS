@@ -773,9 +773,6 @@ screenshots/
 
 # 🚀 Future Improvements
 
-* ⏰ EventBridge Scheduling
-* 📈 Incremental Loading
-* 📊 CloudWatch Monitoring
 * 🔁 Retry Mechanisms
 * 🧪 Data Validation
 * ⚙️ CI/CD Deployment
