@@ -817,7 +817,7 @@ Built a fully automated end-to-end cloud ETL pipeline using PostgreSQL RDS, AWS 
 
 # 🙌 Author
 
-## Akash Soni
+## Akash Soni (Data Scientist)
 
 Cloud & Data Engineering Project
 
