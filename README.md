@@ -1,84 +1,112 @@
-# 🚀 End-to-End AWS ETL Pipeline Project
+# 🚀 Fully Automated PostgreSQL → Snowflake ETL Pipeline using AWS
 
-## 📌 Project Overview
+<div align="center">
 
-This project demonstrates a complete cloud-based ETL (Extract, Transform, Load) pipeline using:
+![AWS](https://img.shields.io/badge/AWS-Cloud-orange)
+![Lambda](https://img.shields.io/badge/AWS-Lambda-yellow)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![Snowflake](https://img.shields.io/badge/Snowflake-DataWarehouse-cyan)
+![Python](https://img.shields.io/badge/Python-ETL-green)
+![S3](https://img.shields.io/badge/Amazon-S3-red)
+![Snowpipe](https://img.shields.io/badge/Snowflake-Snowpipe-blue)
+
+</div>
+
+---
+
+# 📌 Project Overview
+
+This project demonstrates a **Fully Automated End-to-End Cloud ETL (Extract, Transform, Load) Pipeline** using:
 
 * 🐘 PostgreSQL RDS
 * ⚡ AWS Lambda
 * ☁️ Amazon S3
-* ❄️ Snowflake
+* ❄️ Snowflake Snowpipe
 * 🔄 AWS Step Functions
+* 🔐 AWS IAM
+* 📊 CloudWatch
 
-The pipeline extracts data from PostgreSQL, transforms it into CSV format, uploads it to S3, and loads it into Snowflake automatically.
+The pipeline automatically:
+
+✅ Extracts data from PostgreSQL RDS
+✅ Transforms data into CSV format
+✅ Uploads CSV files into Amazon S3
+✅ Snowpipe automatically detects new files
+✅ Snowflake automatically loads data in real-time
+✅ AWS Step Functions orchestrates the entire workflow
 
 ---
 
-# 🏗️ Architecture Diagram
+# 🏗️ Fully Automated Architecture Diagram
 
 ```text
-                ┌──────────────────────┐
-                │ AWS Step Functions   │
-                │ (Workflow Trigger)   │
-                └──────────┬───────────┘
-                           │
-                           ▼
-                ┌──────────────────────┐
-                │ AWS Lambda Function  │
-                │  (ETL Processing)    │
-                └──────────┬───────────┘
-                           │
-             ┌─────────────┴─────────────┐
-             ▼                           ▼
-   ┌──────────────────┐       ┌──────────────────┐
-   │ PostgreSQL RDS   │       │ Amazon S3 Bucket │
-   │ Source Database  │       │ Staging Layer    │
-   └──────────────────┘       └────────┬─────────┘
-                                        │
-                                        ▼
-                              ┌──────────────────┐
-                              │ Snowflake DW     │
-                              │ Data Warehouse   │
-                              └──────────────────┘
+                    🚀 AWS Step Functions
+                              │
+                              ▼
+                    ⚡ AWS Lambda Function
+                       (ETL Processing)
+                              │
+                              ▼
+                    🐘 PostgreSQL RDS
+                        Source Database
+                              │
+                              ▼
+                    🔄 CSV Transformation
+                              │
+                              ▼
+                    ☁️ Amazon S3 Bucket
+                         Staging Layer
+                              │
+                              ▼
+                    ❄️ Snowpipe Auto Ingest
+                              │
+                              ▼
+                    🏔️ Snowflake Warehouse
 ```
 
 ---
 
-# 🔥 Complete ETL Flow
+# 🔥 Complete ETL Workflow
 
-## Step 1 — Step Functions starts workflow
+## 1️⃣ AWS Step Functions Trigger
 
-AWS Step Functions triggers the Lambda function.
-
-⬇️
-
-## Step 2 — Lambda connects to PostgreSQL RDS
-
-Lambda extracts customer data from PostgreSQL database.
+AWS Step Functions starts the ETL workflow automatically.
 
 ⬇️
 
-## Step 3 — Transformation
+## 2️⃣ Lambda Extracts Data
 
-Data is transformed into CSV format.
-
-⬇️
-
-## Step 4 — Upload CSV to S3
-
-CSV file is uploaded into Amazon S3 bucket.
+AWS Lambda connects to PostgreSQL RDS and extracts customer data.
 
 ⬇️
 
-## Step 5 — Snowflake loads data
+## 3️⃣ CSV Transformation
 
-Snowflake reads the CSV from S3 and loads it into Snowflake tables.
+Lambda converts PostgreSQL records into CSV format.
+
+⬇️
+
+## 4️⃣ Upload CSV to Amazon S3
+
+CSV file is uploaded automatically into S3 staging bucket.
+
+⬇️
+
+## 5️⃣ Snowpipe Auto Detection
+
+Snowpipe automatically detects new CSV files uploaded into S3.
+
+⬇️
+
+## 6️⃣ Automatic Snowflake Loading
+
+Snowflake automatically ingests data into warehouse tables.
 
 ---
 
 # 📁 Recommended GitHub Project Structure
 
-````text
+```text
 postgresql-to-snowflake-etl-with-AWS/
 │
 ├── README.md
@@ -99,8 +127,8 @@ postgresql-to-snowflake-etl-with-AWS/
 │   ├── lambda-success.png
 │   ├── s3-bucket.png
 │   ├── snowflake-stage.png
-│   ├── snowflake-copy-into.png
-│   ├── snowflake-select-output.png
+│   ├── snowpipe.png
+│   ├── snowflake-output.png
 │   ├── step-functions-workflow.png
 │   └── step-functions-success.png
 │
@@ -110,36 +138,28 @@ postgresql-to-snowflake-etl-with-AWS/
 └── docs/
     ├── setup-guide.md
     └── aws-services-used.md
-```text
-etl-project/
-│
-├── lambda_function.py
-├── requirements.txt
-├── README.md
-├── architecture.png
-├── snowflake_queries.sql
-└── screenshots/
-````
+```
 
 ---
 
 # ⚙️ AWS Services Used
 
-| Service        | Purpose                |
-| -------------- | ---------------------- |
-| PostgreSQL RDS | Source database        |
-| AWS Lambda     | ETL processing         |
-| Amazon S3      | Staging/data lake      |
-| Snowflake      | Data warehouse         |
-| Step Functions | Workflow orchestration |
-| IAM            | Permissions management |
-| CloudWatch     | Logging                |
+| 🚀 Service            | 📌 Purpose                |
+| --------------------- | ------------------------- |
+| 🐘 PostgreSQL RDS     | Source Database           |
+| ⚡ AWS Lambda          | Serverless ETL Processing |
+| ☁️ Amazon S3          | Data Staging Layer        |
+| ❄️ Snowflake          | Cloud Data Warehouse      |
+| ❄️ Snowpipe           | Real-Time Auto Ingestion  |
+| 🔄 AWS Step Functions | Workflow Orchestration    |
+| 🔐 IAM                | Permissions Management    |
+| 📊 CloudWatch         | Monitoring & Logging      |
 
 ---
 
 # 🐘 Step 1 — Create PostgreSQL RDS Database
 
-## RDS Configuration
+## 📌 RDS Configuration
 
 | Setting       | Value           |
 | ------------- | --------------- |
@@ -165,7 +185,7 @@ Add inbound rule:
 | ---------- | ---- | --------- |
 | PostgreSQL | 5432 | 0.0.0.0/0 |
 
-⚠️ Note: This was temporary for testing.
+⚠️ Note: This was temporarily used for testing purposes.
 
 ---
 
@@ -190,12 +210,14 @@ CREATE TABLE customers (
 INSERT INTO customers VALUES
 (1, 'Akash', 'akash@gmail.com', 'Bhopal'),
 (2, 'Rahul', 'rahul@gmail.com', 'Delhi'),
-(3, 'Aman', 'aman@gmail.com', 'Mumbai');
+(3, 'Aman', 'aman@gmail.com', 'Mumbai'),
+(4, 'Priya', 'priya@gmail.com', 'Pune'),
+(5, 'Rohit', 'rohit@gmail.com', 'Hyderabad');
 ```
 
 ---
 
-# ☁️ Step 2 — Create S3 Bucket
+# ☁️ Step 2 — Create Amazon S3 Bucket
 
 Go to:
 
@@ -217,7 +239,7 @@ customers/
 
 ---
 
-# ⚡ Step 3 — Create Lambda Function
+# ⚡ Step 3 — Create AWS Lambda Function
 
 ## Lambda Configuration
 
@@ -230,28 +252,25 @@ customers/
 
 # 🔑 IAM Role Permissions
 
-Attached Policies:
+Attach these policies:
 
-* AWSLambdaBasicExecutionRole
-* AWSLambdaVPCAccessExecutionRole
-* Custom S3 Policy
+✅ AWSLambdaBasicExecutionRole
+✅ AWSLambdaVPCAccessExecutionRole
+✅ AmazonS3FullAccess
 
 ---
 
-# 📦 Install pg8000 Dependency
-
-Used CloudShell to install pg8000 package.
+# 📦 Install pg8000 Dependency Using CloudShell
 
 Commands used:
 
 ```bash
-mkdir pg8000-package
-cd pg8000-package
-pip install pg8000 -t .
-zip -r postgres-etl-pg8000.zip .
-```
+mkdir full-etl-package
+cd full-etl-package
 
-Uploaded ZIP into Lambda.
+pip install pg8000 -t .
+pip install boto3 -t .
+```
 
 ---
 
@@ -293,7 +312,9 @@ CREATE TABLE customers (
 INSERT INTO customers VALUES
 (1, 'Akash', 'akash@gmail.com', 'Bhopal'),
 (2, 'Rahul', 'rahul@gmail.com', 'Delhi'),
-(3, 'Aman', 'aman@gmail.com', 'Mumbai');
+(3, 'Aman', 'aman@gmail.com', 'Mumbai'),
+(4, 'Priya', 'priya@gmail.com', 'Pune'),
+(5, 'Rohit', 'rohit@gmail.com', 'Hyderabad');
 ```
 
 ---
@@ -309,30 +330,59 @@ sql/snowflake_queries.sql
 Content:
 
 ```sql
+-- =========================================
+-- CREATE DATABASE
+-- =========================================
+
 CREATE DATABASE IF NOT EXISTS etl_db;
 
 USE DATABASE etl_db;
 
 USE SCHEMA PUBLIC;
 
+
+-- =========================================
+-- CREATE STORAGE INTEGRATION
+-- =========================================
+
 CREATE OR REPLACE STORAGE INTEGRATION s3_int
 TYPE = EXTERNAL_STAGE
 STORAGE_PROVIDER = S3
 ENABLED = TRUE
-STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::YOUR_ACCOUNT_ID:role/LambdaETLRole'
+STORAGE_AWS_ROLE_ARN = 'YOUR_AWS_ROLE_ARN'
 STORAGE_ALLOWED_LOCATIONS = ('s3://etl-project-akash-2026/');
 
+
+-- =========================================
+-- GET IAM DETAILS
+-- =========================================
+
 DESC INTEGRATION s3_int;
+
+
+-- =========================================
+-- CREATE FILE FORMAT
+-- =========================================
 
 CREATE OR REPLACE FILE FORMAT csv_format
 TYPE = CSV
 SKIP_HEADER = 1
 FIELD_OPTIONALLY_ENCLOSED_BY = '"';
 
+
+-- =========================================
+-- CREATE STAGE
+-- =========================================
+
 CREATE OR REPLACE STAGE customers_stage
 URL='s3://etl-project-akash-2026/customers/'
 STORAGE_INTEGRATION = s3_int
 FILE_FORMAT = csv_format;
+
+
+-- =========================================
+-- CREATE TARGET TABLE
+-- =========================================
 
 CREATE OR REPLACE TABLE customers (
     customer_id INT,
@@ -341,8 +391,31 @@ CREATE OR REPLACE TABLE customers (
     city STRING
 );
 
+
+-- =========================================
+-- CREATE SNOWPIPE
+-- =========================================
+
+CREATE OR REPLACE PIPE customers_pipe
+AUTO_INGEST = TRUE
+AS
 COPY INTO customers
-FROM @customers_stage;
+FROM @customers_stage
+FILE_FORMAT = (FORMAT_NAME = csv_format);
+
+
+-- =========================================
+-- SHOW PIPE DETAILS
+-- =========================================
+
+SHOW PIPES;
+
+
+-- =========================================
+-- VERIFY DATA
+-- =========================================
+
+SELECT * FROM customers;
 ```
 
 ---
@@ -378,26 +451,26 @@ import boto3
 
 def lambda_handler(event, context):
 
-    # PostgreSQL connection
+    # PostgreSQL Connection
     conn = pg8000.connect(
         host="YOUR_RDS_ENDPOINT",
-        database="postgres",
+        database="ecommerce_etl",
         user="postgres",
-        password="YOUR_PASSWORD",
+        password="YOUR_POSTGRES_PASSWORD",
         port=5432
     )
 
     cursor = conn.cursor()
 
-    # Extract data
+    # Extract Data
     cursor.execute("SELECT * FROM customers")
 
     rows = cursor.fetchall()
 
-    # CSV path
+    # CSV File Path
     csv_file = "/tmp/customers.csv"
 
-    # Transform + write CSV
+    # Transform + Write CSV
     with open(csv_file, mode='w', newline='') as file:
 
         writer = csv.writer(file)
@@ -411,7 +484,7 @@ def lambda_handler(event, context):
 
         writer.writerows(rows)
 
-    # Upload to S3
+    # Upload CSV To S3
     s3 = boto3.client('s3')
 
     s3.upload_file(
@@ -420,11 +493,14 @@ def lambda_handler(event, context):
         "customers/customers.csv"
     )
 
+    cursor.close()
     conn.close()
 
     return {
         'statusCode': 200,
-        'body': json.dumps("CSV uploaded to S3 successfully!")
+        'body': json.dumps(
+            'CSV uploaded to S3 successfully!'
+        )
     }
 ```
 
@@ -443,28 +519,16 @@ Expected Output:
 
 ---
 
-# ❄️ Step 4 — Configure Snowflake
+# ❄️ Step 4 — Configure Snowflake + Snowpipe
 
-## Create Database
-
-```sql
-CREATE DATABASE IF NOT EXISTS etl_db;
-
-USE DATABASE etl_db;
-
-USE SCHEMA PUBLIC;
-```
-
----
-
-# 🔗 Create Storage Integration
+## 🔗 Create Storage Integration
 
 ```sql
 CREATE OR REPLACE STORAGE INTEGRATION s3_int
 TYPE = EXTERNAL_STAGE
 STORAGE_PROVIDER = S3
 ENABLED = TRUE
-STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::YOUR_ACCOUNT_ID:role/LambdaETLRole'
+STORAGE_AWS_ROLE_ARN = 'YOUR_AWS_ROLE_ARN'
 STORAGE_ALLOWED_LOCATIONS = ('s3://etl-project-akash-2026/');
 ```
 
@@ -580,16 +644,45 @@ CREATE OR REPLACE TABLE customers (
 
 ---
 
-# 📥 Load Data into Snowflake
+# 🚀 Create Snowpipe
 
 ```sql
+CREATE OR REPLACE PIPE customers_pipe
+AUTO_INGEST = TRUE
+AS
 COPY INTO customers
-FROM @customers_stage;
+FROM @customers_stage
+FILE_FORMAT = (FORMAT_NAME = csv_format);
 ```
 
 ---
 
-# ✅ Verify Data
+# 🔔 Configure S3 Event Notification
+
+Go to:
+
+```text
+Amazon S3 → Bucket → Properties → Event Notifications
+```
+
+Create event notification:
+
+| Setting     | Value                    |
+| ----------- | ------------------------ |
+| Event Name  | snowpipe-trigger         |
+| Event Type  | All object create events |
+| Prefix      | customers/               |
+| Destination | SQS Queue                |
+
+Paste Snowpipe notification ARN from:
+
+```sql
+SHOW PIPES;
+```
+
+---
+
+# ✅ Verify Loaded Data
 
 ```sql
 SELECT * FROM customers;
@@ -607,7 +700,7 @@ AWS Step Functions → Create State Machine
 
 ## Workflow
 
-* Drag “AWS Lambda Invoke”
+* Add “AWS Lambda Invoke”
 * Select Lambda Function:
 
 ```text
@@ -619,20 +712,22 @@ postgres-etl-function
 
 ---
 
-# 🎯 Final Pipeline Flow
+# 🎯 Final Fully Automated Pipeline Flow
 
 ```text
-Step Functions
-      ↓
-Lambda Function
-      ↓
-PostgreSQL RDS
-      ↓
-CSV Transformation
-      ↓
-Amazon S3
-      ↓
-Snowflake
+🔄 AWS Step Functions
+          ↓
+⚡ AWS Lambda
+          ↓
+🐘 PostgreSQL RDS
+          ↓
+🔄 CSV Transformation
+          ↓
+☁️ Amazon S3
+          ↓
+❄️ Snowpipe Auto Detection
+          ↓
+🏔️ Snowflake Data Warehouse
 ```
 
 ---
@@ -641,18 +736,18 @@ Snowflake
 
 Take screenshots of these pages and save them with these names:
 
-| Screenshot                   | Suggested File Name         |
-| ---------------------------- | --------------------------- |
-| RDS PostgreSQL database page | rds-database.png            |
-| PostgreSQL customers table   | customers-table.png         |
-| Lambda function overview     | lambda-function.png         |
-| Lambda successful execution  | lambda-success.png          |
-| S3 bucket with CSV file      | s3-bucket.png               |
-| Snowflake stage creation     | snowflake-stage.png         |
-| COPY INTO query success      | snowflake-copy-into.png     |
-| Snowflake SELECT output      | snowflake-select-output.png |
-| Step Functions workflow      | step-functions-workflow.png |
-| Step Functions success state | step-functions-success.png  |
+| 📸 Screenshot              | 📂 Suggested File Name      |
+| -------------------------- | --------------------------- |
+| RDS PostgreSQL Database    | rds-database.png            |
+| PostgreSQL Customers Table | customers-table.png         |
+| Lambda Function Overview   | lambda-function.png         |
+| Lambda Success Output      | lambda-success.png          |
+| S3 Bucket with CSV File    | s3-bucket.png               |
+| Snowflake Stage Creation   | snowflake-stage.png         |
+| Snowpipe Creation          | snowpipe.png                |
+| Snowflake Table Output     | snowflake-output.png        |
+| Step Functions Workflow    | step-functions-workflow.png |
+| Step Functions Success     | step-functions-success.png  |
 
 Store them inside:
 
@@ -664,37 +759,34 @@ screenshots/
 
 # 🏆 Key Learnings
 
-✅ Cloud ETL Architecture
-
+✅ Fully Automated ETL Pipeline
+✅ Event-Driven Data Engineering
 ✅ PostgreSQL Integration
-
 ✅ AWS Lambda Serverless ETL
-
 ✅ Amazon S3 Staging Layer
-
-✅ Snowflake Data Warehouse Integration
-
-✅ IAM Policies & Security
-
+✅ Snowflake Snowpipe Auto Ingestion
 ✅ AWS Step Functions Orchestration
+✅ IAM Policies & Security
+✅ Cloud Data Warehousing
 
 ---
 
 # 🚀 Future Improvements
 
-* EventBridge scheduling
-* Incremental loading
-* CloudWatch monitoring
-* Error handling & retries
-* Data validation
-* CI/CD deployment
+* ⏰ EventBridge Scheduling
+* 📈 Incremental Loading
+* 📊 CloudWatch Monitoring
+* 🔁 Retry Mechanisms
+* 🧪 Data Validation
+* ⚙️ CI/CD Deployment
+* 🐳 Dockerized Lambda Deployment
 
 ---
 
 # 🧠 Resume Description
 
 ```text
-Built an end-to-end cloud ETL pipeline using PostgreSQL RDS, AWS Lambda, Amazon S3, Snowflake, and AWS Step Functions. Implemented automated extraction, transformation, and loading of customer data into Snowflake using serverless architecture and cloud orchestration.
+Built a fully automated end-to-end cloud ETL pipeline using PostgreSQL RDS, AWS Lambda, Amazon S3, Snowflake Snowpipe, and AWS Step Functions. Implemented automated extraction, transformation, staging, and real-time ingestion into Snowflake using event-driven cloud architecture.
 ```
 
 ---
@@ -705,18 +797,21 @@ Built an end-to-end cloud ETL pipeline using PostgreSQL RDS, AWS Lambda, Amazon 
 * postgresql-to-snowflake-etl
 * serverless-etl-pipeline
 * aws-snowflake-etl-project
-* end-to-end-data-engineering-project
+* fully-automated-etl-pipeline
 
 ---
 
 # 📌 Technologies Used
 
-![AWS](https://img.shields.io/badge/AWS-Cloud-orange)
-![Lambda](https://img.shields.io/badge/AWS-Lambda-yellow)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
-![Snowflake](https://img.shields.io/badge/Snowflake-DataWarehouse-cyan)
-![Python](https://img.shields.io/badge/Python-ETL-green)
-![S3](https://img.shields.io/badge/Amazon-S3-red)
+* 🐍 Python
+* ☁️ AWS
+* ⚡ Lambda
+* 🐘 PostgreSQL
+* ☁️ Amazon S3
+* ❄️ Snowflake
+* ❄️ Snowpipe
+* 🔄 AWS Step Functions
+* 🔐 IAM
 
 ---
 
@@ -726,4 +821,4 @@ Built an end-to-end cloud ETL pipeline using PostgreSQL RDS, AWS Lambda, Amazon 
 
 Cloud & Data Engineering Project
 
-🚀 End-to-End AWS ETL Pipeline
+🚀 Fully Automated AWS ETL Pipeline

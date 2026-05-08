@@ -1,30 +1,3 @@
--- =====================================================
--- FILE: snowflake_queries.sql
--- PURPOSE: Snowflake ETL configuration and data loading
--- =====================================================
-
-
--- =========================================
--- CREATE DATABASE
--- =========================================
-
-CREATE DATABASE IF NOT EXISTS etl_db;
-
-
--- =========================================
--- USE DATABASE
--- =========================================
-
-USE DATABASE etl_db;
-
-
--- =========================================
--- USE PUBLIC SCHEMA
--- =========================================
-
-USE SCHEMA PUBLIC;
-
-
 -- =========================================
 -- CREATE STORAGE INTEGRATION
 -- =========================================
@@ -38,13 +11,6 @@ STORAGE_ALLOWED_LOCATIONS = ('s3://etl-project-akash-2026/');
 
 
 -- =========================================
--- GET SNOWFLAKE IAM DETAILS
--- =========================================
-
-DESC INTEGRATION s3_int;
-
-
--- =========================================
 -- CREATE FILE FORMAT
 -- =========================================
 
@@ -55,7 +21,7 @@ FIELD_OPTIONALLY_ENCLOSED_BY = '"';
 
 
 -- =========================================
--- CREATE EXTERNAL STAGE
+-- CREATE STAGE
 -- =========================================
 
 CREATE OR REPLACE STAGE customers_stage
@@ -77,22 +43,26 @@ CREATE OR REPLACE TABLE customers (
 
 
 -- =========================================
--- LOAD DATA FROM S3 TO SNOWFLAKE
+-- CREATE SNOWPIPE
 -- =========================================
 
+CREATE OR REPLACE PIPE customers_pipe
+AUTO_INGEST = TRUE
+AS
 COPY INTO customers
-FROM @customers_stage;
+FROM @customers_stage
+FILE_FORMAT = (FORMAT_NAME = csv_format);
 
 
 -- =========================================
--- VERIFY LOADED DATA
+-- SHOW PIPE DETAILS
+-- =========================================
+
+SHOW PIPES;
+
+
+-- =========================================
+-- VERIFY DATA
 -- =========================================
 
 SELECT * FROM customers;
-
-
--- =========================================
--- CHECK FILES AVAILABLE IN STAGE
--- =========================================
-
-LIST @customers_stage;
